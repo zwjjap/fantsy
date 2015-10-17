@@ -1,0 +1,2 @@
+# fantsy
+my javascript world
