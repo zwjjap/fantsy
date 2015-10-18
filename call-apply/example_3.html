@@ -12,9 +12,18 @@ call/apply 应用实例3
 	<title>在封装函数的过程中，确保this的正确传递</title>
 </head>
 <body>
-	<div class="box" style="width: 100px; height: 100px; background: orange"></div>
+	<div class="box"></div>
 </body>
-
+<style>
+	.box {
+		width: 100px;
+		height: 100px;
+		background: orange;
+	}
+	.box:hover {
+		background: #50F573;
+	}
+</style>
 <script>
 
 // Nicco
@@ -25,7 +34,12 @@ var Nicco = function(box, str) {
 Nicco.prototype = {
 	constructor: Nicco,
 
+	params: '',
+
+	// count:0,
+
 	message: function() {
+		// this.count ++;
 		this.$box.on('mousedown', this.bindthis(this.fndown, this));
 	},
 
@@ -38,12 +52,16 @@ Nicco.prototype = {
 	},
 
 	fndown: function() {
-		this.str += ', i love you.';
+		this.params = this.str + ', uuuuuuu.';// + '-' + this.count;
+		// this.count ++;
 		this.$box.on('mouseup', this.bindthis(this.fnup, this));
 	},
 
 	fnup: function() {
-		console.log(this.str);
+		console.log(this.params);
+		// this.count ++;
+		this.$box.off();
+		this.$box.on('mouseup', this.bindthis(this.fnup, this));
 	},
 
 	// 封装一个bindthis方法，用来传递this指向，在this会被改变的地方调用
@@ -66,6 +84,10 @@ $.fn.mess = function(str) {
 $(function() {
 	$('.box').mess('rose');
 })
+
+/*var aaa = new Nicco('jake');
+aaa.message();
+console.log(aaa.count);*/
 
 </script>
 
